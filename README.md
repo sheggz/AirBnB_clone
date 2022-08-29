@@ -1,5 +1,5 @@
 # AirBnB_clone
 ## Description
 ![This is an image](airbnb.png)
-The AirBnB clone project is deployed on server as a simple copy of the AirBnB website.
+The Alx-AirBnB clone project is a project that implements some of the features of the [AirBnB website](https://www.airbnb.com/). It covers all fundamental concepts of the higher level programming track.
 ### Command Interpreter
