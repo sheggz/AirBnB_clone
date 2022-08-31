@@ -76,4 +76,8 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict(self):
         """... checks if BaseModel is properly casted to dictionary"""
-        pass
+        my_model = self.model.to_dict()
+        if "__class__" in my_model:
+            self.assertEqual(my_model["__class__"], "BaseModel")
+        for key in ("created_at", "updated_at"):
+            self.assertIsInstance(my_model[key], str)
