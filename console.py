@@ -1,3 +1,8 @@
+#!/bin/usr/env python3
+"""Custom command line for AirBnB project
+
+This module contains the entry point of the command interpreter
+"""
 import cmd
 from models import storage
 
