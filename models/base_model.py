@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """BaseModel Class.
 
 This module contains a class that defines all other classes in this project.
