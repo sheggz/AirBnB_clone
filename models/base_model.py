@@ -7,7 +7,6 @@ import models
 import uuid
 from datetime import datetime
 
-
 time_format = "%Y-%m-%dT%H:%M:%S.%f"
 
 
@@ -26,32 +25,32 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """An object constructor method"""
         if kwargs:
-            self.__dict__ = kwargs
-            if "created_at" in kwargs:
-                self.created_at = datetime.strptime(kwargs.get("created_at"),
-                                                    time_format)
-            if "updated_at" in kwargs:
-                self.updated_at = datetime.strptime(kwargs.get("updated_at"),
-                                                    time_format)
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    if key == "created_at" or key == "updated_at":
+                        self.__dict__[key] = datetime.strptime(
+                            value, time_format)
+                    else:
+                        self.__dict__[key] = value
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
+            self.updated_at = datetime.now()
             models.storage.new(self)
 
     def __str__(self):
         """A string representation of object"""
-        return "[{}] ({}) {}".format(type(self).__name__, self.id,
-                                     self.__dict__)
+        return f"[{type(self).__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
-        """updates updated_at with the current datetime"""
+        """Updates updated_at with the current datetime and save modelobject"""
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        """Returns all keys/values of __dict__ of the instance"""
-        new_dict = self.__dict__.copy()
-        new_dict["__class__"] = self.__class__.__name__
-        new_dict["created_at"] = new_dict["created_at"].isoformat()
-        new_dict["updated_at"] = new_dict["updated_at"].isoformat()
-        return new_dict
+        """Returns a modified dictionary with all attributes of an object"""
+        new_obj_dict = self.__dict__.copy()
+        new_obj_dict["__class__"] = type(self).__name__
+        new_obj_dict["created_at"] = self.created_at.strftime(time_format)
+        new_obj_dict["updated_at"] = self.updated_at.strftime(time_format)
+        return new_obj_dict
