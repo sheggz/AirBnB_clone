@@ -16,13 +16,13 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, args):
         """Quit command to exit the program
-        
+
         """
         return True
 
     def do_EOF(self, args):
         """Exits the program
-        
+
         """
         return True
 
@@ -31,7 +31,9 @@ class HBNBCommand(cmd.Cmd):
         return False
 
     def do_create(self, args):
-        """Creates a new instance of BaseModel, saves it and prints the id"""
+        """Creates a new instance of a class, saves it and prints the id
+
+        """
         error = HBNBCommand.handle_errors(args)
 
         if error:
@@ -42,7 +44,10 @@ class HBNBCommand(cmd.Cmd):
         print(obj.id)
 
     def do_show(self, args):
-        """Prints the string representation of an instance"""
+        """Prints the string representation of an object based on the class
+        name and id
+
+        """
         error = HBNBCommand.handle_errors(args, com="show")
 
         if error:
@@ -59,7 +64,9 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_destroy(self, args):
-        """Deletes an instance based on the class name and id"""
+        """Deletes an object based on the class name and id
+
+        """
         error = HBNBCommand.handle_errors(args, com="destroy")
 
         if error:
@@ -75,7 +82,10 @@ class HBNBCommand(cmd.Cmd):
             print("** instance not found **")
 
     def do_all(self, args):
-        """Prints string representation of all instances"""
+        """Prints string representation of all objects based on or not
+        the class name
+
+        """
         error = HBNBCommand.handle_errors(args, com="all")
 
         if error:
@@ -96,7 +106,10 @@ class HBNBCommand(cmd.Cmd):
                     print(objects[key])
 
     def do_update(self, args):
-        """Updates an instance based on the class name and id"""
+        """Updates an object based on the class name and id by adding a new
+        attribute or by updating an already existing attribute
+
+        """
         error = HBNBCommand.handle_errors(args, com="update")
 
         if error:
