@@ -61,9 +61,9 @@ class FileStorage:
 
     def delete(self, obj):
         """Deletes objects from the JSON file"""
-        class_name = obj.__class__.__name__
-        id = obj.id
-        key = f"{class_name}.{id}"
+        class_name = type(obj).__name__
+        obj_id = obj.id
+        key = f"{class_name}.{obj_id}"
 
         if key in FileStorage.__objects:
             del FileStorage.__objects[key]
