@@ -23,5 +23,6 @@ class TestHBNBCommandDocs(unittest.TestCase):
         doc = HBNBCommand.__doc__
         self.assertIsNotNone(doc)
 
+
 if __name__ == '__main__':
     unittest.main
