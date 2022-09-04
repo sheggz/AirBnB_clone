@@ -139,15 +139,16 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, arg):
         if "." in arg:
-            str_arg = (
+            arg_str = (
                 arg.replace(".", " ")
                 .replace(", ", " ")
                 .replace("(", " ")
                 .replace(")", " ")
             )
-            str_arg = str_arg.split()
-            str_arg[0], str_arg[1] = str_arg[1], str_arg[0]
-            arg = f"{str_arg}"
+            arg_str = arg_str.split()
+            arg_str[0], arg_str[1] = arg_str[1], arg_str[0]
+            arg = " ".join(arg_str)
+
         return super().precmd(arg)
 
     def onecmd(self, args):
