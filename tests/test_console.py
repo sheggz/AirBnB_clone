@@ -7,10 +7,10 @@ import console
 import unittest
 
 
-Console = console.HBNBCommand
+HBNBCommand = console.HBNBCommand
 
 
-class TestConsoleDocs(unittest.TestCase):
+class TestHBNBCommandDocs(unittest.TestCase):
     """Class for testing console docs"""
 
     def test_doc_file(self):
@@ -20,7 +20,7 @@ class TestConsoleDocs(unittest.TestCase):
 
     def test_doc_class(self):
         """... documentation for the class"""
-        doc = Console.__doc__
+        doc = HBNBCommand.__doc__
         self.assertIsNotNone(doc)
 
 if __name__ == '__main__':
