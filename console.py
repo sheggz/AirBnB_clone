@@ -4,24 +4,35 @@
 Custom command line for AirBnB project.
 """
 import cmd
-from models.base_model import BaseModel
 from models import storage
+from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
-    model_list = ["Amenity", "BaseModel", "City",
-                  "Place", "Review", "State", "User"]
+    models = ("Amenity",
+              "BaseModel",
+              "City",
+              "Place",
+              "Review",
+              "State",
+              "User")
 
-    def do_quit(self, args):
+    def do_quit(self, arg):
         """Quit command to exit the program
 
         """
         return True
 
-    def do_EOF(self, args):
-        """Exits the program
+    def do_EOF(self, arg):
+        """Exits the program when user calls EOF
 
         """
         return True
@@ -30,96 +41,89 @@ class HBNBCommand(cmd.Cmd):
         # Overrides the dafult repeating of previous command
         return False
 
-    def do_create(self, args):
+    def do_create(self, arg):
         """Creates a new instance of a class, saves it and prints the id
 
         """
-        error = HBNBCommand.handle_errors(args)
-
+        error = HBNBCommand.HBNBCommand_error_handler(arg)
         if error:
             return
 
-        obj = eval(args)()
+        obj = eval(arg)()
         obj.save()
         print(obj.id)
 
-    def do_show(self, args):
+    def do_show(self, arg):
         """Prints the string representation of an object based on the class
-        name and id
+name and id
 
         """
-        error = HBNBCommand.handle_errors(args, com="show")
-
+        error = HBNBCommand.HBNBCommand_error_handler(arg, command="show")
         if error:
             return
 
-        args = args.split(" ")
-
+        arg = arg.split()
         objects = storage.all()
-        key = ".".join(args)
+        key = f"{arg[0]}.{arg[1]}"
         obj = objects.get(key)
         if obj:
             print(obj)
         else:
             print("** no instance found **")
 
-    def do_destroy(self, args):
+    def do_destroy(self, arg):
         """Deletes an object based on the class name and id
 
         """
-        error = HBNBCommand.handle_errors(args, com="destroy")
+        error = HBNBCommand.HBNBCommand_error_handler(arg, command="destroy")
 
         if error:
             return
 
-        args = args.split()
-        key = f"{args[0]}.{args[1]}"
-
+        arg = arg.split()
+        key = f"{arg[0]}.{arg[1]}"
         objects = storage.all()
         if key in objects and storage.delete(objects[key]):
             pass
         else:
             print("** instance not found **")
 
-    def do_all(self, args):
+    def do_all(self, arg):
         """Prints string representation of all objects based on or not
-        the class name
+the class name
 
         """
-        error = HBNBCommand.handle_errors(args, com="all")
+        error = HBNBCommand.HBNBCommand_error_handler(arg, command="all")
 
         if error:
             return
 
-        args = args.split(" ")
-
+        arg = arg.split(" ")
         objects = storage.all()
-
-        if args[0] == "":
+        if arg[0] == "":
             for obj in objects.values():
                 print(obj)
-
         else:
             for key in objects:
-                k = key.split(".")
-                if k[0] == args[0]:
+                obj_key = key.split(".")
+                if obj_key[0] == arg[0]:
                     print(objects[key])
 
-    def do_update(self, args):
+    def do_update(self, arg):
         """Updates an object based on the class name and id by adding a new
-        attribute or by updating an already existing attribute
+attribute or by updating an already existing attribute
 
         """
-        error = HBNBCommand.handle_errors(args, com="update")
+        error = HBNBCommand.HBNBCommand_error_handler(arg, command="update")
 
         if error:
             return
 
-        args = args.split()
-        class_name = args[0]
-        id = args[1]
-        attr_name = args[2]
-        attr_value = args[3]
+        arg = arg.split()
+        class_name = arg[0]
+        obj_id = arg[1]
+        attr_name = arg[2]
+        attr_value = arg[3]
 
         if "\"" in attr_value:
             attr_value = attr_value[1:-1]
@@ -128,19 +132,17 @@ class HBNBCommand(cmd.Cmd):
             attr_value = int(attr_value)
 
         objects = storage.all()
-        key = f"{class_name}.{id}"
+        key = f"{class_name}.{obj_id}"
 
-        for k in objects:  # obj is pointing to the key
-            if k == key:
-                obj = objects[k]
+        for obj_key in objects:
+            if obj_key == key:
+                obj = objects[obj_key]
                 setattr(obj, attr_name, attr_value)
-                # obj.__setattr(attr_name, attr_value)
                 obj.save()
                 return
 
         print("** instance id not found **")
 
-    # customizing this will help us handle regex inputs
     def onecmd(self, args):
         if args == "quit":
             return self.do_quit(args)
@@ -150,42 +152,40 @@ class HBNBCommand(cmd.Cmd):
             return cmd.Cmd.onecmd(self, args)
 
     @classmethod
-    def handle_errors(cls, args, **kwargs):
+    def HBNBCommand_error_handler(cls, arg, **kwargs):
         if "all" in kwargs.values():
-            if not args:
+            if not arg:
                 return False
 
-        if not args:
+        if not arg:
             print("** class name missing **")
             return True
         else:
-            args = args.split()
+            arg = arg.split()
 
-        n = len(args)
-
-        if args[0] not in HBNBCommand.model_list:
-            print("** class does not exists **")
+        number_of_command_arg = len(arg)
+    
+        if arg[0] not in HBNBCommand.models:
+            print("** class doesn't exist **")
             return True
 
-        if 'com' not in kwargs:
+        if "command" not in kwargs:
             return False
-
-        for arg in kwargs.values():
-            if arg in ["show", "destroy"]:
-                if n < 2:
+        
+        for command_arg in kwargs.values():
+            if command_arg in ["show", "destroy"]:
+                if number_of_command_arg < 2:
                     print("** instance id missing **")
                     return True
 
-            if arg == "update":
-                if n < 2:
+            if command_arg == "update":
+                if number_of_command_arg < 2:
                     print("** instance id missing **")
                     return True
-
-                elif n < 3:
+                elif number_of_command_arg < 3:
                     print("** attribute name missing **")
                     return True
-
-                elif n < 4:
+                elif number_of_command_arg < 4:
                     print("** value missing **")
                     return True
 
