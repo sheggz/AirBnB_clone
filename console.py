@@ -165,6 +165,9 @@ class HBNBCommand(cmd.Cmd):
                 .replace("(", " ")
                 .replace(")", " ")
                 .replace("\"", "")
+                .replace("{", "")
+                .replace("}", "")
+                .replace(": ", "=")
             )
             arg_str = arg_str.split()
             arg_str[0], arg_str[1] = arg_str[1], arg_str[0]
