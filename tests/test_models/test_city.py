@@ -25,7 +25,7 @@ class TestCityDocs(unittest.TestCase):
         self.assertIsNotNone(doc)
 
 
-class TestAmenity(unittest.TestCase):
+class TestCity(unittest.TestCase):
     """Class for testing City instances"""
 
     def setUp(self):
