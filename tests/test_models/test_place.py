@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Unittest place module.
 
-Test cases for amenity class and methods documentation and instances.
+Test cases for place class and methods documentation and instances.
 """
 import unittest
 
