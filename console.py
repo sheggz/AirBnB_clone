@@ -137,6 +137,26 @@ class HBNBCommand(cmd.Cmd):
 
         print("** instance id not found **")
 
+    def do_count(self, arg):
+        """Prints the number of objects available based on the class name
+
+        """
+        error = HBNBCommand.HBNBCommand_error_handler(arg)
+
+        if error:
+            return
+
+        count = 0
+        arg = arg.split()
+        objects = storage.all()
+        key = arg[0]
+
+        for obj in objects:
+            if key in obj:
+                count += 1
+
+        print(count)
+
     def precmd(self, arg):
         if "." in arg:
             arg_str = (
