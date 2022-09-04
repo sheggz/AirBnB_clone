@@ -17,24 +17,22 @@ from models.user import User
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
-    models = ("Amenity",
-              "BaseModel",
-              "City",
-              "Place",
-              "Review",
-              "State",
-              "User")
+    models = (
+        "Amenity",
+        "BaseModel",
+        "City",
+        "Place",
+        "Review",
+        "State",
+        "User"
+    )
 
     def do_quit(self, arg):
-        """Quit command to exit the program
-
-        """
+        """Quit command to exit the program"""
         return True
 
     def do_EOF(self, arg):
-        """Exits the program when user calls EOF
-
-        """
+        """Exits the program when user calls EOF"""
         return True
 
     def emptyline(self):
@@ -42,9 +40,7 @@ class HBNBCommand(cmd.Cmd):
         return False
 
     def do_create(self, arg):
-        """Creates a new instance of a class, saves it and prints the id
-
-        """
+        """Creates a new instance of a class, saves it and prints the id"""
         error = HBNBCommand.HBNBCommand_error_handler(arg)
         if error:
             return
@@ -55,7 +51,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """Prints the string representation of an object based on the class
-name and id
+        name and id
 
         """
         error = HBNBCommand.HBNBCommand_error_handler(arg, command="show")
@@ -72,9 +68,7 @@ name and id
             print("** no instance found **")
 
     def do_destroy(self, arg):
-        """Deletes an object based on the class name and id
-
-        """
+        """Deletes an object based on the class name and id"""
         error = HBNBCommand.HBNBCommand_error_handler(arg, command="destroy")
 
         if error:
@@ -90,7 +84,7 @@ name and id
 
     def do_all(self, arg):
         """Prints string representation of all objects based on or not
-the class name
+        the class name
 
         """
         error = HBNBCommand.HBNBCommand_error_handler(arg, command="all")
@@ -111,7 +105,7 @@ the class name
 
     def do_update(self, arg):
         """Updates an object based on the class name and id by adding a new
-attribute or by updating an already existing attribute
+        attribute or by updating an already existing attribute
 
         """
         error = HBNBCommand.HBNBCommand_error_handler(arg, command="update")
@@ -125,7 +119,7 @@ attribute or by updating an already existing attribute
         attr_name = arg[2]
         attr_value = arg[3]
 
-        if "\"" in attr_value:
+        if '"' in attr_value:
             attr_value = attr_value[1:-1]
 
         if attr_value.isdigit():
@@ -142,6 +136,19 @@ attribute or by updating an already existing attribute
                 return
 
         print("** instance id not found **")
+
+    def precmd(self, arg):
+        if "." in arg:
+            str_arg = (
+                arg.replace(".", " ")
+                .replace(", ", " ")
+                .replace("(", " ")
+                .replace(")", " ")
+            )
+            str_arg = str_arg.split()
+            str_arg[0], str_arg[1] = str_arg[1], str_arg[0]
+            arg = f"{str_arg}"
+        return super().precmd(arg)
 
     def onecmd(self, args):
         if args == "quit":
@@ -164,14 +171,14 @@ attribute or by updating an already existing attribute
             arg = arg.split()
 
         number_of_command_arg = len(arg)
-    
+
         if arg[0] not in HBNBCommand.models:
             print("** class doesn't exist **")
             return True
 
         if "command" not in kwargs:
             return False
-        
+
         for command_arg in kwargs.values():
             if command_arg in ["show", "destroy"]:
                 if number_of_command_arg < 2:
