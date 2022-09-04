@@ -129,12 +129,12 @@ class HBNBCommand(cmd.Cmd):
                     attr_value = arg[count+1]
                     if '"' in attr_value:
                         attr_value = attr_value[1:-1]
-        
+
                     if attr_value.isdigit():
                         attr_value = int(attr_value)
-                    
+
                     setattr(obj, attr_name, attr_value)
-                
+
                 obj.save()
                 return
 
