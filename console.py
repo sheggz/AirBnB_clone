@@ -75,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         arg = arg.split()
-        key = " ".join(arg[0], arg[1])
+        key = f"{args[0]}.{args[1]}"
         objects = storage.all()
         if key in objects and storage.delete(objects[key]):
             pass
@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
             attr_value = int(attr_value)
 
         objects = storage.all()
-        key = " ".join(class_name, obj_id)
+        key = f"{class_name}.{obj_id}"
 
         for obj_key in objects:
             if obj_key == key:
