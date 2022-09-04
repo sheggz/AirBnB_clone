@@ -116,22 +116,25 @@ class HBNBCommand(cmd.Cmd):
         arg = arg.split()
         class_name = arg[0]
         obj_id = arg[1]
-        attr_name = arg[2]
-        attr_value = arg[3]
-
-        if '"' in attr_value:
-            attr_value = attr_value[1:-1]
-
-        if attr_value.isdigit():
-            attr_value = int(attr_value)
 
         objects = storage.all()
         key = f"{class_name}.{obj_id}"
 
+        arg_len = len(arg) - 1
         for obj_key in objects:
             if obj_key == key:
                 obj = objects[obj_key]
-                setattr(obj, attr_name, attr_value)
+                for count in range(2, arg_len):
+                    attr_name = arg[count]
+                    attr_value = arg[count+1]
+                    if '"' in attr_value:
+                        attr_value = attr_value[1:-1]
+        
+                    if attr_value.isdigit():
+                        attr_value = int(attr_value)
+                    
+                    setattr(obj, attr_name, attr_value)
+                
                 obj.save()
                 return
 
@@ -167,7 +170,8 @@ class HBNBCommand(cmd.Cmd):
                 .replace("\"", "")
                 .replace("{", "")
                 .replace("}", "")
-                .replace(": ", "=")
+                .replace("\'", "")
+                .replace(":", "")
             )
             arg_str = arg_str.split()
             arg_str[0], arg_str[1] = arg_str[1], arg_str[0]
