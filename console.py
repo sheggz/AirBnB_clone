@@ -15,6 +15,7 @@ from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
+    """Defines methods and attributes of the console"""
     prompt = "(hbnb) "
 
     models = (
