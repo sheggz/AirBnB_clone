@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Unittest amenity module.
+"""Unittest city module.
 
-Test cases for amenity class and methods documentation and instances.
+Test cases for city class and methods documentation and instances.
 """
 import unittest
 
@@ -26,12 +26,12 @@ class TestCityDocs(unittest.TestCase):
 
 
 class TestAmenity(unittest.TestCase):
-    """Class for testing Amenity instances"""
+    """Class for testing City instances"""
 
     def setUp(self):
-        """Initializes new Amenity instance for testing"""
+        """Initializes new City instance for testing"""
         self.city = City()
 
     def test_instantiation(self):
-        """... checks if Amenity is properly instantiated"""
+        """... checks if City is properly instantiated"""
         self.assertIsInstance(self.city, City)
