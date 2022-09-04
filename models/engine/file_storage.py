@@ -29,7 +29,7 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self, obj):
-        """Saves new objects with key <obj class name>.id in objects dictionary"""
+        """Saves new objects with key class name.id in objects dictionary"""
         class_name = type(obj).__name__
         obj_id = obj.id
         key = f"{class_name}.{obj_id}"
