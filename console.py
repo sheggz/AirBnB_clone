@@ -80,7 +80,7 @@ class HBNBCommand(cmd.Cmd):
         if key in objects and storage.delete(objects[key]):
             pass
         else:
-            print("** instance not found **")
+            print("** no instance found **")
 
     def do_all(self, arg):
         """Prints string representation of all objects based on or not
@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
                 obj.save()
                 return
 
-        print("** instance id not found **")
+        print("** no instance found **")
 
     def do_count(self, arg):
         """Prints the number of objects available based on the class name
