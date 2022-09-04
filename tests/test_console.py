@@ -19,6 +19,11 @@ class TestConsoleDocs(unittest.TestCase):
         doc = console.__doc__
         self.assertIsNotNone(doc)
 
+    def test_doc_class(self):
+        """... documentation for the class"""
+        doc = Console.__doc__
+        self.assertIsNotNone(doc)
+
 
 class TestConsole(unittest.TestCase):
     """Class for testing Console instances"""
