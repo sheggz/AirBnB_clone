@@ -3,9 +3,8 @@
 
 Test cases for console class and methods documentation and instances.
 """
-import unittest
-
 import console
+import unittest
 
 
 Console = console.HBNBCommand
@@ -24,6 +23,5 @@ class TestConsoleDocs(unittest.TestCase):
         doc = Console.__doc__
         self.assertIsNotNone(doc)
 
-
-class TestConsole(unittest.TestCase):
-    """Class for testing Console instances"""
+if __name__ == '__main__':
+    unittest.main
