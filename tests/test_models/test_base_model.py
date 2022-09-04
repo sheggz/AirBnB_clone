@@ -3,8 +3,8 @@
 
 Test cases for base_model class and methods documentation and instances.
 """
+import pycodestyle
 import unittest
-
 from datetime import datetime
 from models import base_model
 
@@ -45,6 +45,16 @@ class TestBaseModelDocs(unittest.TestCase):
         doc = BaseModel.__str__.__doc__
         self.assertIsNotNone(doc)
 
+    def test_pep8_conformance_base_model(self):
+        style = pycodestyle.StyleGuide(quite=True)
+        result = style.check_files(['models/base_model.py'])
+        self.assertEqual(result.total_errors, 0)
+
+    def test_pep8_conformance_test_base_model(self):
+        style = pycodestyle.StyleGuide(quite=True)
+        result = style.check_files(['tests/test_models/test_base_model.py'])
+        self.assertEqual(result.total_errors, 0)
+
 
 class TestBaseModel(unittest.TestCase):
     """Class for testing BaseModel instances"""
@@ -81,3 +91,7 @@ class TestBaseModel(unittest.TestCase):
             self.assertEqual(my_model["__class__"], "BaseModel")
         for key in ("created_at", "updated_at"):
             self.assertIsInstance(my_model[key], str)
+
+
+if __name__ == "__main__":
+    unittest.main()
