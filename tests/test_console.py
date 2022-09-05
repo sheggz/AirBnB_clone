@@ -3,26 +3,37 @@
 
 Test cases for console class and methods documentation and instances.
 """
-import console
 import unittest
+import sys
+from console import HBNBCommand
+from unittest.mock import create_autospec
 
 
-HBNBCommand = console.HBNBCommand
+class TestConsole(unittest.TestCase):
+    """ class testing console
+    """
+    def setUp(self):
+        """ standard setUp """
+        self.mock_stdin = create_autospec(sys.stdin)
+        self.mock_stdout = create_autospec(sys.stdout)
+
+    def create(self, server=None):
+        """ create """
+        return HBNBCommand(stdin=self.mock_stdin, stdout=self.mock_stdout)
+
+    def test_exit(self):
+        """ test exit command """
+        cli = self.create()
+        self.assertTrue(cli.onecmd("quit"))
+        self.assertTrue(cli.onecmd("EOF"))
+
+    def _last_write(self, nr=None):
+        """:return: last `n` output lines"""
+        if nr is None:
+            return self.mock_stdout.write.call_args[0][0]
+        return "".join(map(lambda c: c[0][0],
+                           self.mock_stdout.write.call_args_list[-nr:]))
 
 
-class TestHBNBCommandDocs(unittest.TestCase):
-    """Class for testing console docs"""
-
-    def test_doc_file(self):
-        """... documentation for the file"""
-        doc = console.__doc__
-        self.assertIsNotNone(doc)
-
-    def test_doc_class(self):
-        """... documentation for the class"""
-        doc = HBNBCommand.__doc__
-        self.assertIsNotNone(doc)
-
-
-if __name__ == '__main__':
-    unittest.main
+if __name__ == "__main__":
+    unittest.main()
