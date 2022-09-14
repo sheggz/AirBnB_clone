@@ -1,7 +1,7 @@
 # 0x01. AirBnB clone - Web static
 ---
 ## Description
-Tasks attempted in this directory introduces me to the basics of frontend - HTML and CSS
+Tasks attempted in this directory, introduce me to the basics of frontend - HTML and CSS
 
 ### Background context
 Now that you have a command interpreter for managing your AirBnB objects, it’s time to make them alive!
