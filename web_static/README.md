@@ -350,4 +350,4 @@ Requirements:
 ```
 ---
 ## Author
-(Oluwasegun Ikoya)[http://github.com/sheggz]
+[Oluwasegun Ikoya](http://github.com/sheggz)
