@@ -348,3 +348,6 @@ Requirements:
         * styles/6-filters.css: for the filters style
         * styles/8-places.css: for the places style
 ```
+---
+## Author
+(Oluwasegun Ikoya)[http://github.com/sheggz]
